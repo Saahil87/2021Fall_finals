@@ -10,5 +10,12 @@ Here are the hypotheses we found fit to explore extremophiles on exoplanets:
 ### Hypothesis 2: If any of the exoplanets possesses similar conditions in which an Extremophile can survive, then those planets could potentially host life.
 
 [1] Habitable Zone - the orbital region around a star in which an Earth-like planet can possess liquid water on its surface and possibly support life.
+
 [2] Exoplanets - Planets that orbit around other stars are called exoplanets.
+
 [3] Extremophiles - a microorganism, that lives in conditions of extreme temperature, acidity, alkalinity, or chemical concentration.
+
+### References:
+https://www.frontiersin.org/articles/10.3389/fmicb.2019.00780/full
+
+https://iopscience.iop.org/article/10.3847/1538-4357/aae36a/meta
