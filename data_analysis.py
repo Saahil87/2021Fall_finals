@@ -25,7 +25,7 @@ Acceptable Output:
 Direction to run the program:
     1. Ensure 'phl_exoplanet_catalog.csv' in the 'data' folder.
     2. Run the main method in 'data_analysis.py' file to perform the analysis and derive the result for hypothesis.
-    3. Run each cell in the 'visulaization.ipynb' file to visualize the hypothesis.
+    3. Run each cell in the 'visualizations.ipynb' file to visualize the hypothesis.
 
 Time taken to run the program:
     .
@@ -43,14 +43,16 @@ Research References:
     1. [3] - ESI Calculation:
     https://phl.upr.edu/projects/earth-similarity-index-esi
 """
+# TODO: Code polishing required
+# TODO: Docstrings and Doctests to be added
 import pandas as pd
 import constants as c
 
 
-def create_exoplanets_catalog(file_name):
+def create_exoplanets_catalog(file_name) -> pd.DataFrame:
     required_columns = ['P_NAME', 'P_MASS', 'P_RADIUS', 'P_TEMP_MEASURED', 'P_ESCAPE', 'P_DENSITY', 'P_DISTANCE',
                         'P_FLUX', 'P_TEMP_EQUIL', 'S_HZ_OPT_MIN', 'S_HZ_OPT_MAX', 'S_HZ_CON_MIN', 'S_HZ_CON_MAX',
-                        'S_TIDAL_LOCK', 'P_HABITABLE']
+                        'S_TIDAL_LOCK', 'P_RADIUS_EST', 'P_MASS_EST']
     # load data file with columns required for our analysis into data frame
     exoplanets_catalog = pd.read_csv(
         # input file name (change here if need be)
@@ -59,8 +61,7 @@ def create_exoplanets_catalog(file_name):
         usecols=lambda column_name: column_name in required_columns
     )
     exoplanets_catalog = exoplanets_catalog.fillna(0)
-    calculate_ESI(exoplanets_catalog)
-    print(exoplanets_catalog)
+    return exoplanets_catalog
 
 
 def calculate_ESI(exoplanets: pd.DataFrame) -> pd.DataFrame:
@@ -83,12 +84,60 @@ def calculate_ESI(exoplanets: pd.DataFrame) -> pd.DataFrame:
             wi = weight_exponent[each_parameter]
             # [3]
             earth_similarity_index *= (1 - abs((xi - xio) / (xi + xio))) ** wi
-        earth_similarity_index = earth_similarity_index ** (1/n)
+        earth_similarity_index = earth_similarity_index ** (1 / n)
         # Calculated Earth similarity index appended to final dataframe
         P_ESI.append(earth_similarity_index)
     exoplanets['P_ESI'] = P_ESI
     return exoplanets
 
 
+def identify_habitability_type(exoplanets: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
+    """
+
+    :param exoplanets:
+    :return:
+    >>> identify_habitability_type(calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv")))
+
+    """
+    habitability_details = exoplanets[['P_NAME', 'P_RADIUS_EST', 'P_MASS_EST', 'P_ESI']]
+    conservative_habitable_planets = habitability_details.loc[
+        (
+            (
+                    (0.5 < (round(habitability_details['P_RADIUS_EST'], 2))) &
+                    (round(habitability_details['P_RADIUS_EST'], 2) <= 1.5)
+            )
+            |
+            (
+                    (0.1 < (round(habitability_details['P_MASS_EST'], 2))) &
+                    (round(habitability_details['P_MASS_EST'], 2) <= 5.0)
+            )
+        )
+        &
+        (
+            habitability_details['P_ESI'] >= 0.6
+        )
+        ]
+    optimistic_habitable_planets = habitability_details.loc[
+        (
+            (
+                    (1.5 < (round(habitability_details['P_RADIUS_EST'], 2))) &
+                    (round(habitability_details['P_RADIUS_EST'], 2) <= 2.5)
+            )
+            |
+            (
+                    (5.1 < (round(habitability_details['P_MASS_EST'], 2))) &
+                    (round(habitability_details['P_MASS_EST'], 2) <= 10.0)
+            )
+        )
+        &
+        (
+            habitability_details['P_ESI'] >= 0.6
+        )
+        ]
+    return conservative_habitable_planets, optimistic_habitable_planets
+
+
 if __name__ == '__main__':
-    create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv")
+    # [1]
+    exoplanets_catalog_esi = calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv"))
+    print(identify_habitability_type(exoplanets_catalog_esi))
