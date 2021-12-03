@@ -1,0 +1,24 @@
+﻿Strain,Domain,Extremophile_Type,Isolation_Ecosystem,Mean_Temperature_K,Temperature_Min_K,Temperature_Max_K,Pressure_Min_Bars,Pressure_Max_Bars,Radiation,Salinity,pH
+Acid/anus in/emus So4a,Archaea,Acidothermophile,Solfatara crater,363,338,369,,,,0.2 (na),1-5.5(2)
+Colwell/a piezophila ATCC BAA-637,Bacteria,Piezopsychrophile,Deep-sea,283,277,288,400,800,,na (3),7 (na)
+Halomonas campisalis MCM B-365,Bacteria,Hyperalkaipl hile,Soda lake,303,277,323,,,,1.1-26.3 (8.9),6-12(9.5)
+Oceanobacillus iheyensis HTE831,Bacteria,"Alkaliphile, piezotolerant, and halotolerant",Deep-sea (mud),303,288,315,1,300,,0-21 (3),6.5-t0 (7-9.5)
+Anoxybacillus pushchinensis K1,Bacteria,Alkalihtermophile,Manure,335,310,339,,,,<3 (na),8-10.5 (9.5)
+AcUnopolysporarighensis H23,Bacteria,Halophile,Saline soil,303,293,313,,,,10-30(15-25),5-8 (6-7)
+"""Geothermobacterium terrireducens"" FW-1a",Bacteria,Hyperthermophile,"ObsidianPool, Yellowstone National Park",358,338,373,,,,0 (na),
+"Shewane/18 piezotOlerans
+WP3",Bacteria,Piezophile,Deep-sea,290.5,273,301,1,500,,1- 7.2 (3-4),6-8(7)
+Colwell/a sp.MT-41,Bacteria,Piezopsychrophile,Deep-sea,275,275,275,518,1035,,,6.8(na)
+Pedobacter arcticus A12,Bacteria,Psychrophile,Tundra (soil),291,277,298,,,,0-2 (0),6-9 (7)
+Thermococcus gammatolerans EJ3,Archaea,Thermophile and radiation-tolerant,Hydrothermal vent (Chimne y),361,328,368,,,5000,-20,na(5.5-6.5)
+Deinococcus radiodurans Rl,Bacteria,Vacuum- and radiation-tolerant,Spoiled canned meat,208,208,208,0.01,0.01,5000,-20,
+"C,yomyces antarcticus MA5682",Fungi,vacuum- and radiation-tolerant,Antarctica,208,208,208,0.01,0.01,,-20,
+Deinococcus geothermalis DSM 11300,Bacteria,Xerotolerant,Hot spring,320,303,328,,,,,5-8  (6.5)
+Halobacterium salinarum NRC-1,Archaea,Xerotolerant. vacuum-and radiation-tolerant,Bo<e core from a salt mine,315,315,315,,,5000,25,
+Picrophrius oshimae KAW 2/2,Arohaea,Hypercidophile,Hot springs. Soltataras,333,320,338,,,,0-20,-0.06-1.8 (0.7)
+Serpentinomonas sp. 81,Bacteria,Alkaliphile,Serpentinizing system,303,291,310,,,,0-0.5 (0),9-12.5(11)
+Methanopyrus kandleri 116,Archaea,Hyperthermophile,Deep-sea hydrothermal,378,363,395,4,400,,0.5-4.5 (3.0),(6.3 - 6.6)
+Pianoooocus halocryophiius Or1,Bacteria,Halopsychnophile,Sea ice core,298,258,310,,,,0-19 (2),6-11 (7-8)
+Halarsenatrbacter silvermanii SLAS-1,Bacteria,Haloalkaliphile,Soda lake,317,301,328,,,,20-35 (35),8.7-9.8 (9.4)
+Thermoooccus piazophilus COGS,Archaea,Piezothermophile,Deep-sea hydrothermal,348,333,368,1,1250,,2-6 (3),5.5-9 (6)
+Haloarchaeal,Archaea,Xerophile,Solar salterns (brine),,,,,,,,
