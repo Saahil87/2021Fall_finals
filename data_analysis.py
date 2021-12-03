@@ -77,7 +77,7 @@ def create_exoplanets_catalog(file_name) -> pd.DataFrame:
     [4048 rows x 19 columns]
     """
     required_columns = ['P_NAME', 'P_MASS', 'P_RADIUS', 'P_TEMP_MEASURED', 'P_ESCAPE', 'P_DENSITY', 'P_DISTANCE',
-                        'P_FLUX', 'P_TEMP_EQUIL', 'P_TEMP_EQUIL_MIN', 'P_TEMP_EQUIL_MAX',
+                        'P_FLUX', 'P_TEMP_EQUIL', 'P_TEMP_EQUIL_MIN', 'P_TEMP_EQUIL_MAX', 'S_RADIUS_EST',
                         'S_NAME', 'S_HZ_OPT_MIN', 'S_HZ_OPT_MAX', 'S_HZ_CON_MIN', 'S_HZ_CON_MAX',
                         'P_HABITABLE', 'P_RADIUS_EST', 'P_MASS_EST']
     # load data file with columns required for our analysis into data frame
