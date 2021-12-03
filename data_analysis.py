@@ -74,7 +74,7 @@ def create_exoplanets_catalog(file_name) -> pd.DataFrame:
     4046   GJ 1061 c     1.75000      0.00  ...            1     1.178333     1.750000
     4047   GJ 1061 d     1.68000      0.00  ...            1     1.164989     1.680000
     <BLANKLINE>
-    [4048 rows x 19 columns]
+    [4048 rows x 20 columns]
     """
     required_columns = ['P_NAME', 'P_MASS', 'P_RADIUS', 'P_TEMP_MEASURED', 'P_ESCAPE', 'P_DENSITY', 'P_DISTANCE',
                         'P_FLUX', 'P_TEMP_EQUIL', 'P_TEMP_EQUIL_MIN', 'P_TEMP_EQUIL_MAX', 'S_RADIUS_EST',
@@ -110,7 +110,7 @@ def calculate_ESI(exoplanets: pd.DataFrame) -> pd.DataFrame:
     4046   GJ 1061 c     1.75000  ...     1.750000               0.0
     4047   GJ 1061 d     1.68000  ...     1.680000               0.0
     <BLANKLINE>
-    [4048 rows x 20 columns]
+    [4048 rows x 21 columns]
     """
     # Subset the dataframe to required columns
     ESI_fields_exoplanet_details = exoplanets[['P_RADIUS', 'P_DENSITY', 'P_ESCAPE', 'P_TEMP_EQUIL']]
@@ -173,7 +173,7 @@ def get_habitable_zone_planets(exoplanets: pd.DataFrame) -> pd.DataFrame:
     3810  TRAPPIST-1 f     0.680152  ...     0.680152          0.695922
     3811  TRAPPIST-1 g     1.341234  ...     1.341234          0.693644
     <BLANKLINE>
-    [27 rows x 20 columns]
+    [27 rows x 21 columns]
     """
     return exoplanets.loc[(exoplanets['P_HABITABLE'] == 1) | (exoplanets['P_HABITABLE'] == 2)]
 
@@ -213,7 +213,7 @@ def get_potentially_habitable_exoplanets(exoplanets: pd.DataFrame) -> pd.DataFra
     3810  TRAPPIST-1 f     0.680152  ...     0.680152          0.695922
     3811  TRAPPIST-1 g     1.341234  ...     1.341234          0.693644
     <BLANKLINE>
-    [27 rows x 20 columns]
+    [27 rows x 21 columns]
     """
     return exoplanets.loc[(exoplanets['P_calculated_ESI'] >= 0.6)]
 
@@ -281,39 +281,102 @@ def identifying_surviving_extremophiles(extremophiles_csv, potentially_habitable
     >>> habitable_exoplanets = exoplanets.loc[(exoplanets['P_calculated_ESI'] >= 0.6)]
     >>> identifying_surviving_extremophiles(".\\data\\Extremophiles Range.csv", habitable_exoplanets)
     ... # doctest: +NORMALIZE_WHITESPACE
-    (                                                                                     P_NAME
-    Strain
-    "Geothermobacterium terrireducens" FW-1a               HD 80606 b, KOI-3680 b, Kepler-539 b
-    AcUnopolysporarighensis H23                            HD 80606 b, KOI-3680 b, Kepler-413 b
-    Acid/anus in/emus So4a                                 HD 80606 b, KOI-3680 b, Kepler-539 b
-    Anoxybacillus pushchinensis K1                         HD 80606 b, KOI-3680 b, Kepler-539 b
-    C,yomyces antarcticus MA5682                                       LHS 1140 b, TRAPPIST-1 f
-    Colwell/a piezophila ATCC BAA-637                                       HD 80606 b, K2-18 b
-    Colwell/a sp.MT-41                                        HD 80606 b, K2-18 b, TRAPPIST-1 d
-    Deinococcus geothermalis DSM 11300                     HD 80606 b, KOI-3680 b, Kepler-539 b
-    Deinococcus radiodurans Rl                                         LHS 1140 b, TRAPPIST-1 f
-    Halarsenatrbacter silvermanii SLAS-1                   HD 80606 b, KOI-3680 b, Kepler-539 b
-    Halobacterium salinarum NRC-1             HD 80606 b, KOI-3680 b, Kepler-413 b, Kepler-5...
-    Halomonas campisalis MCM B-365                                                   HD 80606 b
-    Methanopyrus kandleri 116                 GJ 143 b, HD 80606 b, KOI-3680 b, Kepler-11 g,...
-    Oceanobacillus iheyensis HTE831                                      HD 80606 b, KOI-3680 b
-    Pedobacter arcticus A12                                                          HD 80606 b
-    Picrophrius oshimae KAW 2/2                            HD 80606 b, KOI-3680 b, Kepler-539 b
-    Serpentinomonas sp. 81                                 HD 80606 b, KOI-3680 b, Kepler-413 b
-    Shewane/18 piezotOlerans\\r\\nWP3                                                    HD 80606 b
-    Thermococcus gammatolerans EJ3                         HD 80606 b, KOI-3680 b, Kepler-539 b
-    Thermoooccus piazophilus COGS                          HD 80606 b, KOI-3680 b, Kepler-539 b,                                                                               P_NAME
-    Strain
-    Colwell/a piezophila ATCC BAA-637  GJ 143 b, GJ 357 b, HD 80606 b, K2-146 c, K2-1...
-    Colwell/a sp.MT-41                 GJ 143 b, GJ 357 b, HD 80606 b, K2-146 c, K2-1...
-    Methanopyrus kandleri 116          GJ 357 b, K2-146 c, K2-18 b, K2-263 b, K2-266 ...
-    Oceanobacillus iheyensis HTE831    Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...
-    Shewane/18 piezotOlerans\\r\\nWP3      Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...
-    Thermoooccus piazophilus COGS      Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...,                                                                            P_NAME
-    Strain
-    Deinococcus radiodurans Rl      K2-18 b, Kepler-138 d, Kepler-413 b, LHS 1140 ...
-    Halobacterium salinarum NRC-1   K2-18 b, Kepler-138 d, Kepler-413 b, LHS 1140 ...
-    Thermococcus gammatolerans EJ3  K2-18 b, Kepler-138 d, Kepler-413 b, LHS 1140 ...)
+    (          P_NAME                                    Strain
+    0     HD 80606 b                    Acid/anus in/emus So4a
+    1     KOI-3680 b                    Acid/anus in/emus So4a
+    2   Kepler-539 b                    Acid/anus in/emus So4a
+    3     HD 80606 b         Colwell/a piezophila ATCC BAA-637
+    4        K2-18 b         Colwell/a piezophila ATCC BAA-637
+    5     HD 80606 b            Halomonas campisalis MCM B-365
+    6     HD 80606 b           Oceanobacillus iheyensis HTE831
+    7     KOI-3680 b           Oceanobacillus iheyensis HTE831
+    8     HD 80606 b            Anoxybacillus pushchinensis K1
+    9     KOI-3680 b            Anoxybacillus pushchinensis K1
+    10  Kepler-539 b            Anoxybacillus pushchinensis K1
+    11    HD 80606 b               AcUnopolysporarighensis H23
+    12    KOI-3680 b               AcUnopolysporarighensis H23
+    13  Kepler-413 b               AcUnopolysporarighensis H23
+    14    HD 80606 b  "Geothermobacterium terrireducens" FW-1a
+    15    KOI-3680 b  "Geothermobacterium terrireducens" FW-1a
+    16  Kepler-539 b  "Geothermobacterium terrireducens" FW-1a
+    17    HD 80606 b             Shewane/18 piezotOlerans\\nWP3
+    18    HD 80606 b                        Colwell/a sp.MT-41
+    19       K2-18 b                        Colwell/a sp.MT-41
+    20  TRAPPIST-1 d                        Colwell/a sp.MT-41
+    21    HD 80606 b                   Pedobacter arcticus A12
+    22    HD 80606 b            Thermococcus gammatolerans EJ3
+    23    KOI-3680 b            Thermococcus gammatolerans EJ3
+    24  Kepler-539 b            Thermococcus gammatolerans EJ3
+    25    LHS 1140 b                Deinococcus radiodurans Rl
+    26  TRAPPIST-1 f                Deinococcus radiodurans Rl
+    27    LHS 1140 b              C,yomyces antarcticus MA5682
+    28  TRAPPIST-1 f              C,yomyces antarcticus MA5682
+    29    HD 80606 b        Deinococcus geothermalis DSM 11300
+    30    KOI-3680 b        Deinococcus geothermalis DSM 11300
+    31  Kepler-539 b        Deinococcus geothermalis DSM 11300
+    32    HD 80606 b             Halobacterium salinarum NRC-1
+    33    KOI-3680 b             Halobacterium salinarum NRC-1
+    34  Kepler-413 b             Halobacterium salinarum NRC-1
+    35  Kepler-539 b             Halobacterium salinarum NRC-1
+    36  TRAPPIST-1 c             Halobacterium salinarum NRC-1
+    37    HD 80606 b               Picrophrius oshimae KAW 2/2
+    38    KOI-3680 b               Picrophrius oshimae KAW 2/2
+    39  Kepler-539 b               Picrophrius oshimae KAW 2/2
+    40    HD 80606 b                    Serpentinomonas sp. 81
+    41    KOI-3680 b                    Serpentinomonas sp. 81
+    42  Kepler-413 b                    Serpentinomonas sp. 81
+    43      GJ 143 b                 Methanopyrus kandleri 116
+    44    HD 80606 b                 Methanopyrus kandleri 116
+    45    KOI-3680 b                 Methanopyrus kandleri 116
+    46   Kepler-11 g                 Methanopyrus kandleri 116
+    47  Kepler-539 b                 Methanopyrus kandleri 116
+    48    LHS 1140 c                 Methanopyrus kandleri 116
+    49    HD 80606 b      Halarsenatrbacter silvermanii SLAS-1
+    50    KOI-3680 b      Halarsenatrbacter silvermanii SLAS-1
+    51  Kepler-539 b      Halarsenatrbacter silvermanii SLAS-1
+    52    HD 80606 b             Thermoooccus piazophilus COGS
+    53    KOI-3680 b             Thermoooccus piazophilus COGS
+    54  Kepler-539 b             Thermoooccus piazophilus COGS,            P_NAME                             Strain
+    0        GJ 143 b  Colwell/a piezophila ATCC BAA-637
+    1        GJ 357 b  Colwell/a piezophila ATCC BAA-637
+    2      HD 80606 b  Colwell/a piezophila ATCC BAA-637
+    3        K2-146 c  Colwell/a piezophila ATCC BAA-637
+    4         K2-18 b  Colwell/a piezophila ATCC BAA-637
+    ..            ...                                ...
+    97    Kepler-26 c      Thermoooccus piazophilus COGS
+    98   TRAPPIST-1 b      Thermoooccus piazophilus COGS
+    99   TRAPPIST-1 d      Thermoooccus piazophilus COGS
+    100  TRAPPIST-1 e      Thermoooccus piazophilus COGS
+    101  TRAPPIST-1 f      Thermoooccus piazophilus COGS
+    <BLANKLINE>
+    [102 rows x 2 columns],           P_NAME                          Strain
+    0        K2-18 b  Thermococcus gammatolerans EJ3
+    1   Kepler-138 d  Thermococcus gammatolerans EJ3
+    2   Kepler-413 b  Thermococcus gammatolerans EJ3
+    3     LHS 1140 b  Thermococcus gammatolerans EJ3
+    4   TRAPPIST-1 c  Thermococcus gammatolerans EJ3
+    5   TRAPPIST-1 d  Thermococcus gammatolerans EJ3
+    6   TRAPPIST-1 e  Thermococcus gammatolerans EJ3
+    7   TRAPPIST-1 f  Thermococcus gammatolerans EJ3
+    8   TRAPPIST-1 g  Thermococcus gammatolerans EJ3
+    9        K2-18 b      Deinococcus radiodurans Rl
+    10  Kepler-138 d      Deinococcus radiodurans Rl
+    11  Kepler-413 b      Deinococcus radiodurans Rl
+    12    LHS 1140 b      Deinococcus radiodurans Rl
+    13  TRAPPIST-1 c      Deinococcus radiodurans Rl
+    14  TRAPPIST-1 d      Deinococcus radiodurans Rl
+    15  TRAPPIST-1 e      Deinococcus radiodurans Rl
+    16  TRAPPIST-1 f      Deinococcus radiodurans Rl
+    17  TRAPPIST-1 g      Deinococcus radiodurans Rl
+    18       K2-18 b   Halobacterium salinarum NRC-1
+    19  Kepler-138 d   Halobacterium salinarum NRC-1
+    20  Kepler-413 b   Halobacterium salinarum NRC-1
+    21    LHS 1140 b   Halobacterium salinarum NRC-1
+    22  TRAPPIST-1 c   Halobacterium salinarum NRC-1
+    23  TRAPPIST-1 d   Halobacterium salinarum NRC-1
+    24  TRAPPIST-1 e   Halobacterium salinarum NRC-1
+    25  TRAPPIST-1 f   Halobacterium salinarum NRC-1
+    26  TRAPPIST-1 g   Halobacterium salinarum NRC-1)
     """
 
     converted_units_df = pd.DataFrame()
