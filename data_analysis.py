@@ -343,22 +343,15 @@ def identifying_surviving_extremophiles(extremophiles_csv, potentially_habitable
         "where extremophiles_df.Temperature_Min_K >= converted_units_df.P_TEMP_EQUIL_MIN "
         "and extremophiles_df.Temperature_Max_K <= converted_units_df.P_TEMP_EQUIL_MAX")
 
-    temperature_surviving_extremophiles = temperature_surviving_extremophiles.groupby('Strain').agg(
-        {'P_NAME': lambda x: ', '.join(x)})
-
     pressure_surviving_extremophiles = ps.sqldf(
         "Select converted_units_df.P_NAME , extremophiles_df.Strain "
         "from extremophiles_df left outer join converted_units_df "
         "where extremophiles_df.Pressure_Min_Bars >= converted_units_df.P_PRESSURE")
-    pressure_surviving_extremophiles = pressure_surviving_extremophiles.groupby('Strain').agg(
-        {'P_NAME': lambda x: ', '.join(x)})
 
     radiation_surviving_extremophiles = ps.sqldf(
         "Select converted_units_df.P_NAME , extremophiles_df.Strain "
         "from extremophiles_df left outer join converted_units_df "
         "where extremophiles_df.Radiation >= converted_units_df.P_FLUX")
-    radiation_surviving_extremophiles = radiation_surviving_extremophiles.groupby('Strain').agg(
-        {'P_NAME': lambda x: ', '.join(x)})
 
     return temperature_surviving_extremophiles, pressure_surviving_extremophiles, radiation_surviving_extremophiles
 
