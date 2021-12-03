@@ -324,20 +324,21 @@ def identifying_surviving_extremophiles(extremophiles_csv, potentially_habitable
     51  Kepler-539 b      Halarsenatrbacter silvermanii SLAS-1
     52    HD 80606 b             Thermoooccus piazophilus COGS
     53    KOI-3680 b             Thermoooccus piazophilus COGS
-    54  Kepler-539 b             Thermoooccus piazophilus COGS,            P_NAME                             Strain
+    54  Kepler-539 b             Thermoooccus piazophilus COGS
+    55    HD 80606 b                                    Humans,            P_NAME                             Strain
     0        GJ 143 b  Colwell/a piezophila ATCC BAA-637
     1        GJ 357 b  Colwell/a piezophila ATCC BAA-637
     2      HD 80606 b  Colwell/a piezophila ATCC BAA-637
     3        K2-146 c  Colwell/a piezophila ATCC BAA-637
     4         K2-18 b  Colwell/a piezophila ATCC BAA-637
     ..            ...                                ...
-    97    Kepler-26 c      Thermoooccus piazophilus COGS
-    98   TRAPPIST-1 b      Thermoooccus piazophilus COGS
-    99   TRAPPIST-1 d      Thermoooccus piazophilus COGS
-    100  TRAPPIST-1 e      Thermoooccus piazophilus COGS
     101  TRAPPIST-1 f      Thermoooccus piazophilus COGS
+    102  Kepler-138 b                             Humans
+    103  Kepler-138 d                             Humans
+    104   Kepler-26 c                             Humans
+    105  TRAPPIST-1 f                             Humans
     <BLANKLINE>
-    [102 rows x 2 columns],           P_NAME                          Strain
+    [106 rows x 2 columns],           P_NAME                          Strain
     0        K2-18 b  Thermococcus gammatolerans EJ3
     1   Kepler-138 d  Thermococcus gammatolerans EJ3
     2   Kepler-413 b  Thermococcus gammatolerans EJ3
