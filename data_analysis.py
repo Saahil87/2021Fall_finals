@@ -50,6 +50,7 @@ Research References:
 
 import pandas as pd
 import constants as c
+import pandasql as ps
 
 
 def create_exoplanets_catalog(file_name) -> pd.DataFrame:
@@ -59,6 +60,7 @@ def create_exoplanets_catalog(file_name) -> pd.DataFrame:
     :param file_name: given a file name read required columns and store and return the data in pandas dataframe.
     :return: a dataframe with required columns.
     >>> create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv")
+    ... # doctest: +NORMALIZE_WHITESPACE
               P_NAME      P_MASS  P_RADIUS  ...  S_TIDAL_LOCK  P_RADIUS_EST   P_MASS_EST
     0       11 Com b  6165.86330      0.00  ...      0.642400     12.082709  6165.863300
     1       11 UMi b  4684.78480      0.00  ...      0.648683     12.229641  4684.784800
@@ -72,11 +74,12 @@ def create_exoplanets_catalog(file_name) -> pd.DataFrame:
     4046   GJ 1061 c     1.75000      0.00  ...      0.244044      1.178333     1.750000
     4047   GJ 1061 d     1.68000      0.00  ...      0.244044      1.164989     1.680000
     <BLANKLINE>
-    [4048 rows x 16 columns]
+    [4048 rows x 19 columns]
 
     """
     required_columns = ['P_NAME', 'P_MASS', 'P_RADIUS', 'P_TEMP_MEASURED', 'P_ESCAPE', 'P_DENSITY', 'P_DISTANCE',
-                        'P_FLUX', 'P_TEMP_EQUIL', 'S_HZ_OPT_MIN', 'S_HZ_OPT_MAX', 'S_HZ_CON_MIN', 'S_HZ_CON_MAX',
+                        'P_FLUX', 'P_TEMP_EQUIL', 'P_TEMP_EQUIL_MIN', 'P_TEMP_EQUIL_MAX',
+                        'S_NAME', 'S_HZ_OPT_MIN', 'S_HZ_OPT_MAX', 'S_HZ_CON_MIN', 'S_HZ_CON_MAX',
                         'S_TIDAL_LOCK', 'P_RADIUS_EST', 'P_MASS_EST']
     # load data file with columns required for our analysis into data frame
     exoplanets_catalog = pd.read_csv(
@@ -108,7 +111,7 @@ def calculate_ESI(exoplanets: pd.DataFrame) -> pd.DataFrame:
     4046   GJ 1061 c     1.75000  ...     1.750000               0.0
     4047   GJ 1061 d     1.68000  ...     1.680000               0.0
     <BLANKLINE>
-    [4048 rows x 17 columns]
+    [4048 rows x 20 columns]
     """
     # Subset the dataframe to required columns
     ESI_fields_exoplanet_details = exoplanets[['P_RADIUS', 'P_DENSITY', 'P_ESCAPE', 'P_TEMP_EQUIL']]
@@ -183,8 +186,125 @@ def identify_habitability_type(exoplanets: pd.DataFrame) -> (pd.DataFrame, pd.Da
     return conservative_habitable_planets, optimistic_habitable_planets
 
 
+def identifying_surviving_extremophiles(extremophiles_csv, potentially_habitable_exoplanets_local):
+    """
+    Identifies Extremophiles that can survive on Potentially Habitable Exoplanets.
+    :param potentially_habitable_exoplanets_local: A dataframe containing all potentially habitable planets.
+    :param extremophiles_csv: A CSV
+    file containing information such as temperature, pressure, and radiation in which an Extremophile can survive.
+    :return temperature_surviving_extremophiles: All extremophiles that can survive based on the temperature of the
+    planet
+    :return temperature_surviving_extremophiles: All extremophiles that can survive based on the surface pressure
+    of the planet
+    :return temperature_surviving_extremophiles: All extremophiles that can survive based on
+    the UV radiation of the planet
+    >>> exoplanets = calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv"))
+    >>> habitable_exoplanets = exoplanets.loc[(exoplanets['P_calculated_ESI'] >= 0.6)]
+    >>> identifying_surviving_extremophiles(".\\data\\Extremophiles Range.csv", habitable_exoplanets)
+    ... # doctest: +NORMALIZE_WHITESPACE
+    (                                                                                     P_NAME
+    Strain
+    "Geothermobacterium terrireducens" FW-1a               HD 80606 b, KOI-3680 b, Kepler-539 b
+    AcUnopolysporarighensis H23                            HD 80606 b, KOI-3680 b, Kepler-413 b
+    Acid/anus in/emus So4a                                 HD 80606 b, KOI-3680 b, Kepler-539 b
+    Anoxybacillus pushchinensis K1                         HD 80606 b, KOI-3680 b, Kepler-539 b
+    C,yomyces antarcticus MA5682                                       LHS 1140 b, TRAPPIST-1 f
+    Colwell/a piezophila ATCC BAA-637                                       HD 80606 b, K2-18 b
+    Colwell/a sp.MT-41                                        HD 80606 b, K2-18 b, TRAPPIST-1 d
+    Deinococcus geothermalis DSM 11300                     HD 80606 b, KOI-3680 b, Kepler-539 b
+    Deinococcus radiodurans Rl                                         LHS 1140 b, TRAPPIST-1 f
+    Halarsenatrbacter silvermanii SLAS-1                   HD 80606 b, KOI-3680 b, Kepler-539 b
+    Halobacterium salinarum NRC-1             HD 80606 b, KOI-3680 b, Kepler-413 b, Kepler-5...
+    Halomonas campisalis MCM B-365                                                   HD 80606 b
+    Methanopyrus kandleri 116                 GJ 143 b, HD 80606 b, KOI-3680 b, Kepler-11 g,...
+    Oceanobacillus iheyensis HTE831                                      HD 80606 b, KOI-3680 b
+    Pedobacter arcticus A12                                                          HD 80606 b
+    Picrophrius oshimae KAW 2/2                            HD 80606 b, KOI-3680 b, Kepler-539 b
+    Serpentinomonas sp. 81                                 HD 80606 b, KOI-3680 b, Kepler-413 b
+    Shewane/18 piezotOlerans\\nWP3                                                    HD 80606 b
+    Thermococcus gammatolerans EJ3                         HD 80606 b, KOI-3680 b, Kepler-539 b
+    Thermoooccus piazophilus COGS                          HD 80606 b, KOI-3680 b, Kepler-539 b,                                                                               P_NAME
+    Strain
+    Colwell/a piezophila ATCC BAA-637  GJ 143 b, GJ 357 b, HD 80606 b, K2-146 c, K2-1...
+    Colwell/a sp.MT-41                 GJ 143 b, GJ 357 b, HD 80606 b, K2-146 c, K2-1...
+    Methanopyrus kandleri 116          GJ 357 b, K2-146 c, K2-18 b, K2-263 b, K2-266 ...
+    Oceanobacillus iheyensis HTE831    Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...
+    Shewane/18 piezotOlerans\\nWP3      Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...
+    Thermoooccus piazophilus COGS      Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...,                                                                            P_NAME
+    Strain
+    Deinococcus radiodurans Rl      K2-18 b, Kepler-138 d, Kepler-413 b, LHS 1140 ...
+    Halobacterium salinarum NRC-1   K2-18 b, Kepler-138 d, Kepler-413 b, LHS 1140 ...
+    Thermococcus gammatolerans EJ3  K2-18 b, Kepler-138 d, Kepler-413 b, LHS 1140 ...)
+    """
+
+    converted_units_df = pd.DataFrame()
+
+    converted_units_df['P_NAME'] = potentially_habitable_exoplanets_local['P_NAME']
+    converted_units_df['S_NAME'] = potentially_habitable_exoplanets_local['S_NAME']
+    converted_units_df.loc[:, 'P_MASS'] = potentially_habitable_exoplanets_local['P_MASS'] * c.MASS
+    converted_units_df.loc[:, 'P_RADIUS'] = potentially_habitable_exoplanets_local['P_RADIUS'] * (c.DIAMETER / 2)
+    converted_units_df.loc[:, 'P_DENSITY'] = potentially_habitable_exoplanets_local['P_DENSITY'] * c.DENSITY
+    converted_units_df.loc[:, 'P_FLUX'] = potentially_habitable_exoplanets_local['P_FLUX'] * c.SOLAR_FLUX
+    converted_units_df.loc[:, 'P_TEMP_EQUIL_MIN'] = potentially_habitable_exoplanets_local['P_TEMP_EQUIL_MIN']
+    converted_units_df.loc[:, 'P_TEMP_EQUIL_MAX'] = potentially_habitable_exoplanets_local['P_TEMP_EQUIL_MAX']
+
+    converted_units_df['P_PRESSURE'] = calculate_pressure(converted_units_df['P_DENSITY'],
+                                                          converted_units_df['P_MASS'],
+                                                          converted_units_df['P_RADIUS'])
+    converted_units_df = converted_units_df.set_index('P_NAME')
+
+    extremophiles_df = pd.DataFrame(pd.read_csv(extremophiles_csv,
+                                                usecols=['Strain', 'Extremophile_Type', 'Temperature_Min_K',
+                                                         'Temperature_Max_K', 'Pressure_Min_Bars', 'Pressure_Max_Bars',
+                                                         'Radiation']))
+    extremophiles_df = extremophiles_df.fillna(0)
+    temperature_surviving_extremophiles = ps.sqldf(
+        "Select converted_units_df.P_NAME , extremophiles_df.Strain "
+        "from extremophiles_df left outer join converted_units_df "
+        "where extremophiles_df.Temperature_Min_K >= converted_units_df.P_TEMP_EQUIL_MIN "
+        "and extremophiles_df.Temperature_Max_K <= converted_units_df.P_TEMP_EQUIL_MAX")
+
+    temperature_surviving_extremophiles = temperature_surviving_extremophiles.groupby('Strain').agg(
+        {'P_NAME': lambda x: ', '.join(x)})
+
+    pressure_surviving_extremophiles = ps.sqldf(
+        "Select converted_units_df.P_NAME , extremophiles_df.Strain "
+        "from extremophiles_df left outer join converted_units_df "
+        "where extremophiles_df.Pressure_Min_Bars >= converted_units_df.P_PRESSURE")
+    pressure_surviving_extremophiles = pressure_surviving_extremophiles.groupby('Strain').agg(
+        {'P_NAME': lambda x: ', '.join(x)})
+
+    radiation_surviving_extremophiles = ps.sqldf(
+        "Select converted_units_df.P_NAME , extremophiles_df.Strain "
+        "from extremophiles_df left outer join converted_units_df "
+        "where extremophiles_df.Radiation >= converted_units_df.P_FLUX")
+    radiation_surviving_extremophiles = radiation_surviving_extremophiles.groupby('Strain').agg(
+        {'P_NAME': lambda x: ', '.join(x)})
+
+    return temperature_surviving_extremophiles, pressure_surviving_extremophiles, radiation_surviving_extremophiles
+
+
+def calculate_pressure(density, mass, radius):
+    """
+    Calulates Pressure based on Pascal's Pressure Principle
+    # Source https://www.physicsforums.com/threads/pressure-at-center-of-planet.66257/
+    :param density: Density of the planet in kg/m^3
+    :param mass: Mass of the planet in kg
+    :param radius: Radius of the planet in Meters
+    :return: Pressure in Bars
+    >>> calculate_pressure(c.DENSITY, c.MASS, (c.DIAMETER / 2))
+    1.0812762002812073
+    """
+
+    depth = 2  # Since we want surface pressure
+    g = (c.G * mass) / (radius ** 2)
+    pressure = density * g * depth  # According to Pascal's Pressure Principle
+    return pressure * (10 ** -5)
+
+
 if __name__ == '__main__':
     # [1]
     exoplanets_catalog_esi = calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv"))
     potentially_habitable_exoplanets = exoplanets_catalog_esi.loc[(exoplanets_catalog_esi['P_calculated_ESI'] >= 0.6)]
     print(identify_habitability_type(potentially_habitable_exoplanets))
+    print(identifying_surviving_extremophiles(".\\data\\Extremophiles Range.csv", potentially_habitable_exoplanets))
