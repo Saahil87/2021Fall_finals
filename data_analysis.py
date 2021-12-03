@@ -143,39 +143,27 @@ def get_habitable_zone_planets(exoplanets: pd.DataFrame) -> pd.DataFrame:
     Returns list of exoplanets that fall in the habitable zone.
     :param exoplanets: same input dataframe with filtered exoplanets.
     :return:
-    >>> get_potentially_habitable_exoplanets(calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv")))
-                P_NAME       P_MASS  ...   P_MASS_EST  P_calculated_ESI
-    135       GJ 143 b    22.699276  ...    22.699276          0.687067
-    157       GJ 357 b     1.840224  ...     1.840224          0.654383
-    830     HD 80606 b  1392.086700  ...  1392.086700          0.636489
-    981       K2-146 c     7.494384  ...     7.494384          0.617501
-    1029       K2-18 b     8.921432  ...     8.921432          0.813958
-    1146      K2-263 b    14.801250  ...    14.801250          0.663082
-    1153      K2-266 e    14.299082  ...    14.299082          0.619196
-    1179      K2-285 e    10.701269  ...    10.701269          0.603094
-    1337    KOI-3680 b   613.408050  ...   613.408050          0.607695
-    1489   Kepler-11 g    25.108412  ...    25.108412          0.694571
-    1850  Kepler-138 b     0.066744  ...     0.066744          0.601465
-    1851  Kepler-138 c     1.970534  ...     1.970534          0.791120
-    1852  Kepler-138 d     0.638834  ...     0.638834          0.768840
-    2310   Kepler-20 d    10.068791  ...    10.068791          0.651218
-    2488   Kepler-26 c     6.200824  ...     6.200824          0.641576
-    2890  Kepler-413 b    67.061709  ...    67.061709          0.793707
-    2986   Kepler-48 d     7.945700  ...     7.945700          0.653588
-    3066  Kepler-539 b   308.293160  ...   308.293160          0.628438
-    3663    LHS 1140 b     6.979503  ...     6.979503          0.708638
-    3664    LHS 1140 c     1.808441  ...     1.808441          0.761213
-    3667  LTT 1445 A b     2.199370  ...     2.199370          0.748333
-    3806  TRAPPIST-1 b     0.848601  ...     0.848601          0.771585
-    3807  TRAPPIST-1 c     1.379374  ...     1.379374          0.902225
-    3808  TRAPPIST-1 d     0.409998  ...     0.409998          0.903853
-    3809  TRAPPIST-1 e     0.619765  ...     0.619765          0.813324
-    3810  TRAPPIST-1 f     0.680152  ...     0.680152          0.695922
-    3811  TRAPPIST-1 g     1.341234  ...     1.341234          0.693644
+    >>> get_habitable_zone_planets(calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv")))
+                P_NAME      P_MASS  ...  P_MASS_EST  P_calculated_ESI
+    20        47 UMa b  804.104850  ...  804.104850               0.0
+    29        55 Cnc f   44.813748  ...   44.813748               0.0
+    34         7 CMa b  781.856890  ...  781.856890               0.0
+    42    BD+14 4559 b  330.541120  ...  330.541120               0.0
+    51     BD+49 828 b  508.524800  ...  508.524800               0.0
+    ...            ...         ...  ...         ...               ...
+    3994   Wolf 1061 c    3.410295  ...    3.410295               0.0
+    4035     tau Cet e    3.931532  ...    3.931532               0.0
+    4043      K2-296 b    0.000000  ...    4.155456               0.0
+    4046     GJ 1061 c    1.750000  ...    1.750000               0.0
+    4047     GJ 1061 d    1.680000  ...    1.680000               0.0
     <BLANKLINE>
-    [27 rows x 21 columns]
+    [197 rows x 21 columns]
     """
-    return exoplanets.loc[(exoplanets['P_HABITABLE'] == 1) | (exoplanets['P_HABITABLE'] == 2)]
+    return exoplanets.loc[
+        (exoplanets['P_DISTANCE'] > exoplanets['S_HZ_OPT_MIN']) &
+        (exoplanets['P_DISTANCE'] < exoplanets['S_HZ_OPT_MAX'])
+        ]
+    # return exoplanets.loc[(exoplanets['P_HABITABLE'] == 1) | (exoplanets['P_HABITABLE'] == 2)]
 
 
 def get_potentially_habitable_exoplanets(exoplanets: pd.DataFrame) -> pd.DataFrame:
