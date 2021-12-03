@@ -429,8 +429,33 @@ if __name__ == '__main__':
     # [1]
     all_exoplanets_with_esi = calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv"))
     planets_in_habitable_zone = get_habitable_zone_planets(all_exoplanets_with_esi)
+
+    print("-------All planets residing in their habitable zones-------")
     print(planets_in_habitable_zone)
+    print("\n")
     potentially_habitable_exoplanets = get_potentially_habitable_exoplanets(all_exoplanets_with_esi)
+    print("-------All Earth like planets-------")
     print(potentially_habitable_exoplanets)
-    print(identify_habitability_type(planets_in_habitable_zone))
-    print(identifying_surviving_extremophiles(".\\data\\Extremophiles Range.csv", potentially_habitable_exoplanets))
+    print("\n")
+    print("-------All planets residing in their conservative habitable zone-------")
+    habitibility_type = identify_habitability_type(planets_in_habitable_zone)
+    conservative_zone_planets = habitibility_type[0]
+    print(conservative_zone_planets)
+    print("\n")
+    print("-------All planets residing in their optimistic habitable zone-------")
+    optimistic_zone_planets = habitibility_type[1]
+    print(optimistic_zone_planets)
+    print("\n")
+    surviving_extremophiles = identifying_surviving_extremophiles(".\\data\\Extremophiles Range.csv", potentially_habitable_exoplanets)
+    print("-------Extremophiles Surviving Extreme Temperatures-------")
+    temperature_surviving_extremophiles = surviving_extremophiles[0]
+    print(temperature_surviving_extremophiles)
+    print("\n")
+    print("-------Extremophiles Surviving Extreme Pressures-------")
+    pressure_surviving_extremophiles = surviving_extremophiles[1]
+    print(pressure_surviving_extremophiles)
+    print("\n")
+    print("-------Extremophiles Surviving Extreme Radiation-------")
+    radiation_surviving_extremophiles = surviving_extremophiles[2]
+    print(radiation_surviving_extremophiles)
+    print("\n")
