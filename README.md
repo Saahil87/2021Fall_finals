@@ -5,7 +5,7 @@ Life beyond the Earth has always been a fascinating quest for scientists. Roughl
 
 Here are the hypotheses we found fit to explore extremophiles on exoplanets:
 
-### Hypothesis 1: Approximately 12% of the confirmed exoplanets are in the habitable zone of their systems, hence they possess Earth-like conditions.
+### Hypothesis 1: All exoplanets that fall under habitable zone posses earth-like conditions.
 
 ### Hypothesis 2: If any of the exoplanets possesses similar conditions in which an Extremophile can survive, then those planets could potentially host life.
 

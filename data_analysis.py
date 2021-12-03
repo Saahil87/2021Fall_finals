@@ -61,26 +61,25 @@ def create_exoplanets_catalog(file_name) -> pd.DataFrame:
     :return: a dataframe with required columns.
     >>> create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv")
     ... # doctest: +NORMALIZE_WHITESPACE
-              P_NAME      P_MASS  P_RADIUS  ...  S_TIDAL_LOCK  P_RADIUS_EST   P_MASS_EST
-    0       11 Com b  6165.86330      0.00  ...      0.642400     12.082709  6165.863300
-    1       11 UMi b  4684.78480      0.00  ...      0.648683     12.229641  4684.784800
-    2       14 And b  1525.57440      0.00  ...      0.600010     12.848516  1525.574400
-    3       14 Her b  1481.07850      0.00  ...      0.445415     12.865261  1481.078500
-    4     16 Cyg B b   565.73385      0.00  ...      0.473325     13.421749   565.733850
-    ...          ...         ...       ...  ...           ...           ...          ...
-    4043    K2-296 b     0.00000      1.87  ...      0.000000      1.870000     4.155456
-    4044    K2-296 c     0.00000      2.76  ...      0.000000      2.760000     8.047485
-    4045   GJ 1061 b     1.38000      0.00  ...      0.244044      1.102775     1.380000
-    4046   GJ 1061 c     1.75000      0.00  ...      0.244044      1.178333     1.750000
-    4047   GJ 1061 d     1.68000      0.00  ...      0.244044      1.164989     1.680000
+              P_NAME      P_MASS  P_RADIUS  ...  P_HABITABLE P_RADIUS_EST   P_MASS_EST
+    0       11 Com b  6165.86330      0.00  ...            0    12.082709  6165.863300
+    1       11 UMi b  4684.78480      0.00  ...            0    12.229641  4684.784800
+    2       14 And b  1525.57440      0.00  ...            0    12.848516  1525.574400
+    3       14 Her b  1481.07850      0.00  ...            0    12.865261  1481.078500
+    4     16 Cyg B b   565.73385      0.00  ...            0    13.421749   565.733850
+    ...          ...         ...       ...  ...          ...          ...          ...
+    4043    K2-296 b     0.00000      1.87  ...            2     1.870000     4.155456
+    4044    K2-296 c     0.00000      2.76  ...            0     2.760000     8.047485
+    4045   GJ 1061 b     1.38000      0.00  ...            0     1.102775     1.380000
+    4046   GJ 1061 c     1.75000      0.00  ...            1     1.178333     1.750000
+    4047   GJ 1061 d     1.68000      0.00  ...            1     1.164989     1.680000
     <BLANKLINE>
     [4048 rows x 19 columns]
-
     """
     required_columns = ['P_NAME', 'P_MASS', 'P_RADIUS', 'P_TEMP_MEASURED', 'P_ESCAPE', 'P_DENSITY', 'P_DISTANCE',
                         'P_FLUX', 'P_TEMP_EQUIL', 'P_TEMP_EQUIL_MIN', 'P_TEMP_EQUIL_MAX',
                         'S_NAME', 'S_HZ_OPT_MIN', 'S_HZ_OPT_MAX', 'S_HZ_CON_MIN', 'S_HZ_CON_MAX',
-                        'S_TIDAL_LOCK', 'P_RADIUS_EST', 'P_MASS_EST']
+                        'P_HABITABLE', 'P_RADIUS_EST', 'P_MASS_EST']
     # load data file with columns required for our analysis into data frame
     exoplanets_catalog = pd.read_csv(
         # input file name (change here if need be)
@@ -137,6 +136,86 @@ def calculate_ESI(exoplanets: pd.DataFrame) -> pd.DataFrame:
         P_ESI.append(earth_similarity_index)
     exoplanets['P_calculated_ESI'] = P_ESI
     return exoplanets
+
+
+def get_habitable_zone_planets(exoplanets: pd.DataFrame) -> pd.DataFrame:
+    """
+    Returns list of exoplanets that fall in the habitable zone.
+    :param exoplanets: same input dataframe with filtered exoplanets.
+    :return:
+    >>> get_potentially_habitable_exoplanets(calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv")))
+                P_NAME       P_MASS  ...   P_MASS_EST  P_calculated_ESI
+    135       GJ 143 b    22.699276  ...    22.699276          0.687067
+    157       GJ 357 b     1.840224  ...     1.840224          0.654383
+    830     HD 80606 b  1392.086700  ...  1392.086700          0.636489
+    981       K2-146 c     7.494384  ...     7.494384          0.617501
+    1029       K2-18 b     8.921432  ...     8.921432          0.813958
+    1146      K2-263 b    14.801250  ...    14.801250          0.663082
+    1153      K2-266 e    14.299082  ...    14.299082          0.619196
+    1179      K2-285 e    10.701269  ...    10.701269          0.603094
+    1337    KOI-3680 b   613.408050  ...   613.408050          0.607695
+    1489   Kepler-11 g    25.108412  ...    25.108412          0.694571
+    1850  Kepler-138 b     0.066744  ...     0.066744          0.601465
+    1851  Kepler-138 c     1.970534  ...     1.970534          0.791120
+    1852  Kepler-138 d     0.638834  ...     0.638834          0.768840
+    2310   Kepler-20 d    10.068791  ...    10.068791          0.651218
+    2488   Kepler-26 c     6.200824  ...     6.200824          0.641576
+    2890  Kepler-413 b    67.061709  ...    67.061709          0.793707
+    2986   Kepler-48 d     7.945700  ...     7.945700          0.653588
+    3066  Kepler-539 b   308.293160  ...   308.293160          0.628438
+    3663    LHS 1140 b     6.979503  ...     6.979503          0.708638
+    3664    LHS 1140 c     1.808441  ...     1.808441          0.761213
+    3667  LTT 1445 A b     2.199370  ...     2.199370          0.748333
+    3806  TRAPPIST-1 b     0.848601  ...     0.848601          0.771585
+    3807  TRAPPIST-1 c     1.379374  ...     1.379374          0.902225
+    3808  TRAPPIST-1 d     0.409998  ...     0.409998          0.903853
+    3809  TRAPPIST-1 e     0.619765  ...     0.619765          0.813324
+    3810  TRAPPIST-1 f     0.680152  ...     0.680152          0.695922
+    3811  TRAPPIST-1 g     1.341234  ...     1.341234          0.693644
+    <BLANKLINE>
+    [27 rows x 20 columns]
+    """
+    return exoplanets.loc[(exoplanets['P_HABITABLE'] == 1) | (exoplanets['P_HABITABLE'] == 2)]
+
+
+def get_potentially_habitable_exoplanets(exoplanets: pd.DataFrame) -> pd.DataFrame:
+    """
+    Filter exoplanets with ESI >= 0.6
+    :param exoplanets: required dataframe with calculated ESI.
+    :return: same input dataframe with filtered exoplanets.
+    >>> get_potentially_habitable_exoplanets(calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv")))
+                P_NAME       P_MASS  ...   P_MASS_EST  P_calculated_ESI
+    135       GJ 143 b    22.699276  ...    22.699276          0.687067
+    157       GJ 357 b     1.840224  ...     1.840224          0.654383
+    830     HD 80606 b  1392.086700  ...  1392.086700          0.636489
+    981       K2-146 c     7.494384  ...     7.494384          0.617501
+    1029       K2-18 b     8.921432  ...     8.921432          0.813958
+    1146      K2-263 b    14.801250  ...    14.801250          0.663082
+    1153      K2-266 e    14.299082  ...    14.299082          0.619196
+    1179      K2-285 e    10.701269  ...    10.701269          0.603094
+    1337    KOI-3680 b   613.408050  ...   613.408050          0.607695
+    1489   Kepler-11 g    25.108412  ...    25.108412          0.694571
+    1850  Kepler-138 b     0.066744  ...     0.066744          0.601465
+    1851  Kepler-138 c     1.970534  ...     1.970534          0.791120
+    1852  Kepler-138 d     0.638834  ...     0.638834          0.768840
+    2310   Kepler-20 d    10.068791  ...    10.068791          0.651218
+    2488   Kepler-26 c     6.200824  ...     6.200824          0.641576
+    2890  Kepler-413 b    67.061709  ...    67.061709          0.793707
+    2986   Kepler-48 d     7.945700  ...     7.945700          0.653588
+    3066  Kepler-539 b   308.293160  ...   308.293160          0.628438
+    3663    LHS 1140 b     6.979503  ...     6.979503          0.708638
+    3664    LHS 1140 c     1.808441  ...     1.808441          0.761213
+    3667  LTT 1445 A b     2.199370  ...     2.199370          0.748333
+    3806  TRAPPIST-1 b     0.848601  ...     0.848601          0.771585
+    3807  TRAPPIST-1 c     1.379374  ...     1.379374          0.902225
+    3808  TRAPPIST-1 d     0.409998  ...     0.409998          0.903853
+    3809  TRAPPIST-1 e     0.619765  ...     0.619765          0.813324
+    3810  TRAPPIST-1 f     0.680152  ...     0.680152          0.695922
+    3811  TRAPPIST-1 g     1.341234  ...     1.341234          0.693644
+    <BLANKLINE>
+    [27 rows x 20 columns]
+    """
+    return exoplanets.loc[(exoplanets['P_calculated_ESI'] >= 0.6)]
 
 
 def identify_habitability_type(exoplanets: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
@@ -221,7 +300,7 @@ def identifying_surviving_extremophiles(extremophiles_csv, potentially_habitable
     Pedobacter arcticus A12                                                          HD 80606 b
     Picrophrius oshimae KAW 2/2                            HD 80606 b, KOI-3680 b, Kepler-539 b
     Serpentinomonas sp. 81                                 HD 80606 b, KOI-3680 b, Kepler-413 b
-    Shewane/18 piezotOlerans\\nWP3                                                    HD 80606 b
+    Shewane/18 piezotOlerans\\r\\nWP3                                                  HD 80606 b
     Thermococcus gammatolerans EJ3                         HD 80606 b, KOI-3680 b, Kepler-539 b
     Thermoooccus piazophilus COGS                          HD 80606 b, KOI-3680 b, Kepler-539 b,                                                                               P_NAME
     Strain
@@ -229,7 +308,7 @@ def identifying_surviving_extremophiles(extremophiles_csv, potentially_habitable
     Colwell/a sp.MT-41                 GJ 143 b, GJ 357 b, HD 80606 b, K2-146 c, K2-1...
     Methanopyrus kandleri 116          GJ 357 b, K2-146 c, K2-18 b, K2-263 b, K2-266 ...
     Oceanobacillus iheyensis HTE831    Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...
-    Shewane/18 piezotOlerans\\nWP3      Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...
+    Shewane/18 piezotOlerans\\r\\nWP3    Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...
     Thermoooccus piazophilus COGS      Kepler-138 b, Kepler-138 d, Kepler-20 d, Keple...,                                                                            P_NAME
     Strain
     Deinococcus radiodurans Rl      K2-18 b, Kepler-138 d, Kepler-413 b, LHS 1140 ...
@@ -304,7 +383,10 @@ def calculate_pressure(density, mass, radius):
 
 if __name__ == '__main__':
     # [1]
-    exoplanets_catalog_esi = calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv"))
-    potentially_habitable_exoplanets = exoplanets_catalog_esi.loc[(exoplanets_catalog_esi['P_calculated_ESI'] >= 0.6)]
-    print(identify_habitability_type(potentially_habitable_exoplanets))
+    all_exoplanets_with_esi = calculate_ESI(create_exoplanets_catalog(".\\data\\phl_exoplanet_catalog.csv"))
+    planets_in_habitable_zone = get_habitable_zone_planets(all_exoplanets_with_esi)
+    print(planets_in_habitable_zone)
+    potentially_habitable_exoplanets = get_potentially_habitable_exoplanets(all_exoplanets_with_esi)
+    print(potentially_habitable_exoplanets)
+    print(identify_habitability_type(planets_in_habitable_zone))
     print(identifying_surviving_extremophiles(".\\data\\Extremophiles Range.csv", potentially_habitable_exoplanets))
