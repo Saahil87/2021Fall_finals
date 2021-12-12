@@ -1,8 +1,10 @@
 """
 Project Name: Life Beyond Earth
+
 Designed By:
     1. Saahil Hiranandani
     2. Manasi Karale
+
 Description:
     Life beyond the Earth has always been a fascinating quest for scientists. Roughly 12% out of an approximate 5000
     exoplanets have been found to be in the “habitable zone [1]” in our observed universe, yet there exists a question
@@ -13,9 +15,14 @@ Description:
 Pre-requisite Installations:
     1. Install these libraries in your cloned project via PyCharm:
         1. pandas
+        2. pandasql
+        3. ipywidgets
+        4. matplotlib
 
 Acceptable Input:
     1. phl_exoplanet_catalog.csv - data store of 4048 observable exoplanets
+    2. Extremophiles Range.csv - data store of extremophiles and humans with ranges of temperature, radiation and
+    pressure.
 
 Acceptable Output:
     1. Hypothesis 1 - TRUE or FALSE
@@ -27,25 +34,20 @@ Direction to run the program:
     2. Run the main method in 'data_analysis.py' file to perform the analysis and derive the result for hypothesis.
     3. Run each cell in the 'visualizations.ipynb' file to visualize the hypothesis.
 
-Time taken to run the program:
-    .
-    .
-    .
-
 Database References:
     1. [1] - Exoplanets catalog:
     https://phl.upr.edu/projects/habitable-exoplanets-catalog/data/database
     For any questions on the units and meaning of column refer to the planets_metadata.txt file
     2. [2] - Extremophiles range
+    https://www.frontiersin.org/articles/10.3389/fmicb.2019.00780/full
 Code References:
-    1. []
+    1. [5] - https://pandas.pydata.org/docs/user_guide/merging.html
 Research References:
     1. [3] - ESI Calculation:
     https://www.liebertpub.com/doi/pdfplus/10.1089/ast.2010.0592?casa_token=ThEocKPBuRgAAAAA:BI1329Vwl7j0_zO7qtkLeHVp5-WPIBMlqypxHfVM1y7byLyj1RL2NuelTFga4t7VtTl_DvzNaFtwliqR
     2. [4] - ESI Reference Values and Weight Exponent constants:
     https://phl.upr.edu/projects/earth-similarity-index-esi
 """
-# TODO: Code polishing required
 
 
 import pandas as pd
