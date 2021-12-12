@@ -58,7 +58,32 @@ Plot all the planets with their sun (its habitable zones) and planet orbits.
 
 ---
 
+
+
 #### <u>Step 1:</u>
+After the analysis from hypothesis one, use all potentially habitable planets to identify extremophiles that can survive extreme temperatures, pressures, and radiation respectively.
+
+#### <u>Step 2:</u>
+Plotting all surviving Extremophiles 
+
+##### Extremophiles surviving extreme temperatures
+
+![](https://github.com/Saahil87/2021Fall_finals/blob/main/visualizations_files/visualizations_21_0.png?raw=true)
+
+##### Extremophiles surviving extreme pressures
+
+![](https://github.com/Saahil87/2021Fall_finals/blob/main/visualizations_files/visualizations_23_0.png?raw=true)
+
+##### Extremophiles survivng extreme radiation
+
+![](https://github.com/Saahil87/2021Fall_finals/blob/main/visualizations_files/visualizations_25_0.png?raw=true)
+
+#### <u>Step 3:</u>
+Identifying overlap between all survivng extremophiles obtained in step 1
+
+![](https://github.com/Saahil87/2021Fall_finals/blob/main/visualizations_files/visualizations_30_0.png?raw=true)
+
+
 
 
 [1] Habitable Zone - the orbital region around a star in which an Earth-like planet can possess liquid water on its surface and possibly support life.
