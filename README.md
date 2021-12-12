@@ -14,7 +14,7 @@ Here are the hypotheses we found fit to explore extremophiles on exoplanets:
 
 Formulae to calculate ESI:
 
-![](C:\Users\MANASI\PycharmProjects\2021Fall_finals\visualizations_files\New.png)
+![](https://github.com/Saahil87/2021Fall_finals/blob/main/visualizations_files/New.png?raw=true)
 
 #### <u>Step 1:</u>
 Using the above formulae calculate ESI of each planet using 4 planetary properties - 
@@ -36,12 +36,12 @@ Identify the type of habitability as
    1.5 < Planet Radius < 2.5
    5.0 < Planet Mass < 10.0
 
-![](C:\Users\MANASI\PycharmProjects\2021Fall_finals\visualizations_files\visualizations_7_0.png)
+![](https://github.com/Saahil87/2021Fall_finals/blob/main/visualizations_files/visualizations_7_0.png?raw=true)
 
 #### <u>Step 4:</u>
 Identify the overlap between planets that lie in the habitable zone and the planets that are earth-like using step 1 and 2:
 
-![](C:\Users\MANASI\PycharmProjects\2021Fall_finals\visualizations_files\visualizations_10_0.png)
+![](https://github.com/Saahil87/2021Fall_finals/blob/main/visualizations_files/visualizations_10_0.png?raw=true)
 
 #### <u>Step 5:</u>
 Send all the common and earth like planets as an input for Hypothesis 2.
@@ -49,7 +49,7 @@ Send all the common and earth like planets as an input for Hypothesis 2.
 #### <u>Step 6:</u>
 Plot all the planets with their sun (its habitable zones) and planet orbits.
 
-![img.png](C:\Users\MANASI\PycharmProjects\2021Fall_finals\visualizations_files\habitable_zone.png)
+![](https://github.com/Saahil87/2021Fall_finals/blob/main/visualizations_files/habitable_zone.png?raw=true)
 
 ---
 
