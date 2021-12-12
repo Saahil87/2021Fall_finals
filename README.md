@@ -48,7 +48,9 @@ Send all the common and earth like planets as an input for Hypothesis 2.
 
 #### <u>Step 6:</u>
 Plot all the planets with their sun (its habitable zones) and planet orbits.
+
 ![img.png](C:\Users\MANASI\PycharmProjects\2021Fall_finals\visualizations_files\habitable_zone.png)
+
 ---
 
 
