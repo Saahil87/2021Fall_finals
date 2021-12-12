@@ -7,7 +7,57 @@ Here are the hypotheses we found fit to explore extremophiles on exoplanets:
 
 ### Hypothesis 1: All exoplanets that fall in the habitable zone of their solar system posses earth-like conditions and vice-versa.
 
+---
+1. Planets that orbit around a star outside the solar system.
+2. Orbital region around a star in which planets can posses liquid on its surface and possibly posses life.
+3. Planets whose earth similarity index is 0.6 and above - A quantitative measure of departure from a reference state, usually on a scale from zero to one.
+
+Formulae to calculate ESI:
+
+![](C:\Users\MANASI\PycharmProjects\2021Fall_finals\visualizations_files\New.png)
+
+#### <u>Step 1:</u>
+Using the above formulae calculate ESI of each planet using 4 planetary properties - 
+1. Radius
+2. Density
+3. Escape Velocity
+4. Surface Temperature
+for each exoplanet in the database.
+
+#### <u>Step 2:</u>
+Get the list of exoplanets that fall in the habitable zone by calculating the planet distance from it's sun and verifying if it lies in between the habitable max radius and min radius of that sun.
+
+#### <u>Step 3:</u>
+Identify the type of habitability as 
+1. Conservative - 
+   0.2 < Planet Radius < 1.5
+   0.1 < Planet Mass < 5.0
+2. Optimistic - 
+   1.5 < Planet Radius < 2.5
+   5.0 < Planet Mass < 10.0
+
+![](C:\Users\MANASI\PycharmProjects\2021Fall_finals\visualizations_files\visualizations_7_0.png)
+
+#### <u>Step 4:</u>
+Identify the overlap between planets that lie in the habitable zone and the planets that are earth-like using step 1 and 2:
+
+![](C:\Users\MANASI\PycharmProjects\2021Fall_finals\visualizations_files\visualizations_10_0.png)
+
+#### <u>Step 5:</u>
+Send all the common and earth like planets as an input for Hypothesis 2.
+
+#### <u>Step 6:</u>
+Plot all the planets with their sun (its habitable zones) and planet orbits.
+![img.png](C:\Users\MANASI\PycharmProjects\2021Fall_finals\visualizations_files\habitable_zone.png)
+---
+
+
 ### Hypothesis 2: If any of the exoplanets possesses similar conditions in which an Extremophile can survive, then those planets could potentially host life.
+
+---
+
+#### <u>Step 1:</u>
+
 
 [1] Habitable Zone - the orbital region around a star in which an Earth-like planet can possess liquid water on its surface and possibly support life.
 
